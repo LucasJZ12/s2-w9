@@ -1,5 +1,6 @@
 class Main {
   public static void main(String[] args) {
-    new RGBImage();
+    RGBImage r = new RGBImage();
+    r.contrastStretch();
   }
 }
