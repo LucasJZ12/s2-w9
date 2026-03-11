@@ -186,48 +186,42 @@ public class RGBImage{
     }
 
     public void contrastStretch(){
-        int max = 255;
-        int min = 0;
+        int maxRed = red[0][0];
+        int maxGreen = green[0][0];
+        int maxBlue = blue[0][0];
+        int minRed = red[0][0];
+        int minGreen = green[0][0];
+        int minBlue = blue[0][0];
         int height = red.length;
         int width = red[0].length;
+        
         for (int h=0;h<height;h++) {
             for (int w=0;w<width;w++) {
-                if(red[h][w] > 255/2){
-                    red[h][w] = (int)(red[h][w]*1.5);
-                    if(red[h][w] > max){
-                        red[h][w] = 255;
-                    }
+                if(red[h][w] < minRed){
+                    minRed = red[h][w];
                 }
-                else{
-                    red[h][w] = (int)(red[h][w]*0.5);
-                    if(red[h][w] < min){
-                        red[h][w] = 0;
-                    }
+                if(green[h][w] < minGreen){
+                    minGreen = green[h][w];
                 }
-                if(green[h][w] > 255/2){
-                    green[h][w] = (int)(green[h][w]*1.5);
-                    if(green[h][w] > max){
-                        green[h][w] = 255;
-                    }
+                if(blue[h][w] < minBlue){
+                    minBlue = blue[h][w];
                 }
-                else{
-                    green[h][w] = (int)(green[h][w]*0.5);
-                    if(green[h][w] < min){
-                        green[h][w] = 0;
-                    }
+                if(red[h][w] > maxRed){
+                    maxRed = red[h][w];
                 }
-                if(blue[h][w] > 255/2){
-                    blue[h][w] = (int)(blue[h][w]*1.5);
-                    if(blue[h][w] > max){
-                        blue[h][w] = 255;
-                    }
+                if(green[h][w] > maxGreen){
+                    maxGreen = green[h][w];
                 }
-                else{
-                    blue[h][w] = (int)(blue[h][w]*0.5);
-                    if(blue[h][w] < min){
-                        blue[h][w] = 0;
-                    }
+                if(blue[h][w] > maxBlue){
+                    maxBlue = blue[h][w];
                 }
+            }
+        }
+        for(int i = 0; i < red.length; i ++){
+            for(int j = 0; j < red[0].length;j ++){
+                red[i][j] = 255*(red[i][j]-minRed)/(maxRed-minRed);
+                blue[i][j] = 255*(blue[i][j]-minBlue)/(maxBlue-minBlue);
+                green[i][j] = 255*(green[i][j]-minGreen)/(maxGreen-minGreen);
             }
         }
         refresh();
